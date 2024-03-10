@@ -1,0 +1,17 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "旅游助手_tbw",
+    "name_for_model": "travel_helper_tbw",
+    "description_for_human": "个性化的旅游助手，可以根据用户的提问为用户提供景点推荐和信息介绍，还可以根据用户的位置为用户提供路线推荐和出行方式推荐",
+    "description_for_model": "帮助用户推荐景点，提供景点信息，根据用户的位置为用户提供路线推荐和出行方式推荐",
+    "auth": {
+        "type": "none"
+    },
+    "api": {
+        "type": "openapi",
+        "url": "http://127.0.0.1:8081/.well-known/openapi.yaml"
+    },
+    "logo_url": "http://127.0.0.1:8081/logo.png",
+    "contact_email": "1135824127@qq.com",
+    "legal_info_url": "http://www.example.com/legal"
+}
