@@ -5,11 +5,16 @@ from flask import Flask, request, send_file, make_response
 from flask_cors import CORS
 import json
 import random
+import erniebot
+
+erniebot.api_type = "aistudio"
+erniebot.access_token = "5c3317708ed67e6ce4a1da1f9556067b9faffb4d"
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://yiyan.baidu.com"}})
 
 wordbook = []
+
 
 def make_json_response(data, status_code=200):
     response = make_response(json.dumps(data), status_code)
@@ -25,6 +30,16 @@ async def add_word():
     word = request.json.get('word', "")
     wordbook.append(word)
     return make_json_response({"message": "单词添加成功"})
+
+
+@app.route("/get_spot", methods=['POST'])
+async def get_spot():
+    """
+        展示景点推荐
+    """
+    city = request.json.get('city', "")
+    # wordbook.append(word)
+    return make_json_response({"message": city})
 
 
 @app.route("/delete_word", methods=['DELETE'])
@@ -92,11 +107,10 @@ async def openapi_spec():
         return text, 200, {"Content-Type": "text/yaml"}
 
 
-
-
 @app.route('/')
 def index():
     return 'welcome to my webpage!'
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=8081)

@@ -1,11 +1,29 @@
 openapi: 3.0.1
 info:
-    title: 单词本
-    description: 个性化的英文单词本，可以增加、删除和浏览单词本中的单词，背单词时从已有单词本中随机抽取单词生成句子或者段落。
+    title: 旅游助手
+    description: 个性化的旅游助手，可以根据用户的提问为用户提供景点推荐和信息介绍，还可以根据用户的位置为用户提供路线推荐和出行方式推荐。
     version: "v1"
 servers:
     - url: http://127.0.0.1:8081
 paths:
+    /get_spot:
+        post:
+            operationId: getSpot
+            summary: 展示推荐的景点
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/getSpot"
+            responses:
+                "200":
+                    description: 景点推荐完成
+                    content: 
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/spotResponse"                
+
     /get_wordbook:
         get:
             operationId: getWordbook
@@ -71,6 +89,20 @@ paths:
 
 components:
     schemas:
+        getSpot:
+            type: object
+            required: [city]
+            properties: 
+                city:
+                    type: string
+                    description: 城市
+        spotResponse:
+            type: object
+            required: [spot]
+            properties:
+                spot:
+                    type: object
+                    description: 景点信息
         getWordbook:
             type: object
             required: [wordbook]
