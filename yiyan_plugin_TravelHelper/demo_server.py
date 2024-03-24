@@ -1,14 +1,24 @@
 #!/usr/env python3
 # -*- coding: UTF-8 -*-
 
-from flask import Flask, request, send_file, make_response
+from flask import Flask, request, send_file, make_response, jsonify
 from flask_cors import CORS
 import json
 import random
 import erniebot
+import requests 
 
 erniebot.api_type = "aistudio"
 erniebot.access_token = "5c3317708ed67e6ce4a1da1f9556067b9faffb4d"
+
+# 驾车路线规划
+url = "https://api.map.baidu.com/directionlite/v1/driving"
+ak = "6RozstuI6bL2iEajd9NdXDhBheDlr3UN"
+params = {
+    "origin":    "40.01116,116.339303",
+    "destination":    "39.936404,116.452562",
+    "ak":       ak,
+}
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://yiyan.baidu.com"}})
@@ -20,6 +30,7 @@ def make_json_response(data, status_code=200):
     response = make_response(json.dumps(data), status_code)
     response.headers["Content-Type"] = "application/json"
     return response
+
 
 
 @app.route("/add_word", methods=['POST'])
@@ -38,8 +49,9 @@ async def get_spot():
         展示景点推荐
     """
     city = request.json.get('city', "")
-    # wordbook.append(word)
-    return make_json_response({"message": city})
+    # return make_json_response({"message": city})
+    response = requests.get(url=url, params=params)
+    return make_json_response(response.json())
 
 
 @app.route("/delete_word", methods=['DELETE'])
