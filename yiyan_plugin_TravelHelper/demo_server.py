@@ -1,7 +1,7 @@
 #!/usr/env python3
 # -*- coding: UTF-8 -*-
 
-from flask import Flask, request, send_file, make_response, jsonify
+from flask import Flask, request, send_file, make_response
 from flask_cors import CORS
 import json
 import random
@@ -25,9 +25,10 @@ CORS(app, resources={r"/*": {"origins": "https://yiyan.baidu.com"}})
 
 wordbook = []
 
-
+# 创建一个JSON格式的HTTP响应并返回
 def make_json_response(data, status_code=200):
     response = make_response(json.dumps(data), status_code)
+    # 设置响应对象的HTTP头部
     response.headers["Content-Type"] = "application/json"
     return response
 
@@ -49,10 +50,9 @@ async def get_spot():
         展示景点推荐
     """
     city = request.json.get('city', "")
-    # return make_json_response({"message": city})
-    response = requests.get(url=url, params=params)
-    return make_json_response(response.json())
-
+    # 返回插件传入的城市名
+    return make_json_response({"message": city})
+    
 
 @app.route("/delete_word", methods=['DELETE'])
 async def delete_word():
