@@ -23,7 +23,23 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/spotResponse"                
-
+    /get_way:
+        post:
+            operationId: getWay
+            summary: 展示推荐的出行方式
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/getWay"
+            responses:
+                "200":
+                    description: 出行方式推荐完成
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/wayResponse"
     /get_wordbook:
         get:
             operationId: getWordbook
@@ -103,6 +119,22 @@ components:
                 spot:
                     type: object
                     description: 景点信息
+        getWay:
+            type: object
+            required: [cities]
+            properties:
+                cities:
+                    type: array
+                    description: 起点城市名和终点城市名
+                    items:
+                        type: string
+        wayResponse:
+            type: object
+            required: [way]
+            properties:
+                way:
+                    type: object
+                    description: 出行方式
         getWordbook:
             type: object
             required: [wordbook]

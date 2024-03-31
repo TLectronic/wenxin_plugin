@@ -50,8 +50,17 @@ async def get_spot():
         展示景点推荐
     """
     city = request.json.get('city', "")
-    # 返回插件传入的城市名
-    return make_json_response({"message": city})
+    prompt = "根据城市名（city）给出这个城市的三个景点推荐"
+    return make_json_response({"city": city, "prompt": prompt})
+
+@app.route("/get_way", methods=['POST'])
+async def get_way():
+    """
+        展示出行方式推荐
+    """
+    cities = request.json.get('cities', [])
+    prompt = "根据起点城市名和终点城市名给出由起点到终点的出行方式推荐"
+    return make_json_response({"cities": cities, "prompt": prompt})
     
 
 @app.route("/delete_word", methods=['DELETE'])
